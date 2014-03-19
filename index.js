@@ -63,7 +63,7 @@ module.exports = function ssi(opt) {
 				ignored = false;
 			}
 		});
-		return ignored;
+		return false;
 	}
 
 	/**
@@ -110,9 +110,8 @@ module.exports = function ssi(opt) {
 
 			var filepath = dir;
 
-			if(include.type.toLowerCase === 'file' &&
-				currDir &&
-				currDir !== '') {
+			if(include.type.toLowerCase() === 'file' &&
+				currDir) {
 					filepath = path.join(dir, currDir, include.path);
 				} else {
 					filepath = path.join(dir, include.path);
@@ -197,11 +196,11 @@ module.exports = function ssi(opt) {
 				//Get the includes absolute filePath
 				var filepath = getFilePath(include, currDir);
 
-				var includeBuffer = getFile(filepath);
+				var includeBuffer = filepath ? getFile(filepath) : null;
 
-				var includeData = includeBuffer ? parseSSI(includeBuffer, newDir) : errorMessage;
+				var includeData = includeBuffer !== null ? parseSSI(includeBuffer, newDir) : errorMessage;
 
-				body.replace(include.original, includeData);
+				body = body.replace(include.original.trim() , includeData);
 
 			});
 		}
@@ -215,6 +214,8 @@ module.exports = function ssi(opt) {
 			return next();
 		}
 		res._ssi = true;
+
+		clearCache();
 
 		var writeHead = res.writeHead;
 		var write = res.write;
