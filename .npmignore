@@ -1,0 +1,10 @@
+.npmignore
+.editorconfig
+.jshintrc
+.jshintignore
+.gitattributes
+examples/
+docs/
+src/
+test/
+spec/
