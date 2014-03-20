@@ -67,10 +67,10 @@ module.exports = function ssi(opt) {
 	}
 
 	/**
-     * Generates an array of the SSI tags in the given html string
-     * @param  {string} html A string of HTML tags
-     * @return {Array}      A list of include tag objects, with their type, path, and original tag
-     */
+	 * Generates an array of the SSI tags in the given html string
+	 * @param  {string} html A string of HTML tags
+	 * @return {Array}      A list of include tag objects, with their type, path, and original tag
+	 */
 	function getIncludes(html) {
 		var matches = html.match(ssiRegex);
 
@@ -96,12 +96,12 @@ module.exports = function ssi(opt) {
 	}
 
 	/**
-     * Creates the full filepath to the include objects path
-     * @param  {object} include The include object to get the full path for
-     * @param  {string} currDir The filepath to the current working directory
-     * @return {string}         The fullpath to a include objects path,
+	 * Creates the full filepath to the include objects path
+	 * @param  {object} include The include object to get the full path for
+	 * @param  {string} currDir The filepath to the current working directory
+	 * @return {string}         The fullpath to a include objects path,
 	 *                          null if the file is not found
-     */
+	 */
 	function getFilePath(include, currDir) {
 
 		var fullPath = null;
@@ -130,10 +130,10 @@ module.exports = function ssi(opt) {
 	}
 
 	/**
-     * Creates a key string from the passed in filepath
-     * @param  {string} filePath the filepath to create the key for
-     * @return {string}          A Key string for the filepath
-     */
+	 * Creates a key string from the passed in filepath
+	 * @param  {string} filePath the filepath to create the key for
+	 * @return {string}          A Key string for the filepath
+	 */
 	function getKey(filepath) {
 		var key = filepath.substring(0, filepath.lastIndexOf(path.extname(filepath)));
 
@@ -141,10 +141,10 @@ module.exports = function ssi(opt) {
 	}
 
 	/**
-     * Returns the data for a entry in the cache
-     * @param  {string} key Key for the cache entry
-     * @return {string}     The Data for the cache entry
-     */
+	 * Returns the data for a entry in the cache
+	 * @param  {string} key Key for the cache entry
+	 * @return {string}     The Data for the cache entry
+	 */
 	function getCache(key) {
 
 		var cache = ssiCache[key];
@@ -243,11 +243,11 @@ module.exports = function ssi(opt) {
 
 					var dir = path.dirname(URL.parse(req.url).pathname);
 
-					res.data = parseSSI(body, dir);
-				} else {
-					restore();
-					return write.call(res, string, encoding);
+					body = parseSSI(body, dir);
 				}
+
+				restore();
+				return write.call(res, body, encoding);
 			}
 			return true;
 		};
