@@ -32,7 +32,7 @@ module.exports = function ssi(opt) {
 
 	var html = opt.html || _html;
 
-	var errorMessage = opt.errorMessage || '[There was an error processing this include]';
+	var errorMessage = opt.errorMessage !== null ? opt.errorMessage  : '[There was an error processing this include]';
 
 	var fileEncoding = opt.encoding || 'utf8';
 
