@@ -24,7 +24,7 @@ module.exports = function ssi(opt) {
 	}
 
 	//var ssiRegex = opt.ssiRegex || /<!--\#include\s+(file|virtual)=["']([^"'<>|\b]+)['"]\s+-->/gi;
-	var includeRegex = opt.includeRegex || /<!--\#include\s+(file|virtual)=["']([^"'<>|\b]+)['"]\s+-->/;
+	var includeRegex = opt.includeRegex || /<!--\s*\#include\s+(file|virtual)=["']([^"'<>|\b]+)['"]\s*-->/;
 
 	var ssiRegex = new RegExp(includeRegex.source, 'gi');
 
