@@ -245,8 +245,8 @@ module.exports = function ssi(opt) {
 
 					body = parseSSI(body, dir);
 				}
-
-				restore();
+				/* Breaks multi-part HTML responses */
+				//restore();
 				return write.call(res, body, encoding);
 			}
 			return true;
