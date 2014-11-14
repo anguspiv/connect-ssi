@@ -245,8 +245,8 @@ module.exports = function ssi(opt) {
 
 					body = parseSSI(body, dir);
 				}
-
-				restore();
+				/* Breaks multi-part HTML responses */
+				//restore();
 				return write.call(res, body, encoding);
 			}
 			return true;
@@ -270,11 +270,11 @@ module.exports = function ssi(opt) {
 		};
 
 		res.end = function(string, encoding) {
-			restore();
 			var result = res.inject(string, encoding);
+			restore();
 			if (!result) return end.call(res, string, encoding);
 			if (res.data !== undefined && !res._header) res.setHeader('content-length', Buffer.byteLength(res.data, encoding));
-			res.end(res.data, encoding);
+			res.end();
 		};
 		next();
 	};
