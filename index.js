@@ -19,6 +19,8 @@ module.exports = function ssi(opt) {
 					['.html', '.shtml', '.inc', '.incl'];
 	var baseDir = opt.baseDir || __dirname;
 
+	var proxies = opt.proxies || [];
+
 	if(!Array.isArray(baseDir)) {
 		baseDir = [baseDir];
 	}
@@ -192,6 +194,23 @@ module.exports = function ssi(opt) {
 
 				//Grab the new Current Directory
 				var newDir = path.join(currDir, path.dirname(include.path));
+
+				proxies.forEach(function(proxy) {
+
+                    if(include.path.indexOf(proxy.context) > -1) {
+
+                        for(var rule in proxy.rewrite){
+                            if(proxy.rewrite.hasOwnProperty(rule)) {
+
+                                var regexRule = new RegExp(rule);
+
+                                include.path = include.path.replace(regexRule, proxy.rewrite[rule]);
+                            }
+                        }
+                    }
+
+
+                });
 
 				//Get the includes absolute filePath
 				var filepath = getFilePath(include, currDir);
